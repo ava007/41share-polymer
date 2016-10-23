@@ -1,0 +1,48 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+
+
+<!--- https://elements.polymer-project.org/elements/iron-list -->
+
+
+<dom-module id="my-new-view">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+ 
+    <style>
+      :host {
+        display: block;
+        padding: 16px;
+      }
+    </style>
+
+    <h1>Shared Objects by Category</h1>
+
+    <iron-ajax
+        auto
+        url="https://www.41share.com/api/categories/jsona"
+        handle-as="json"
+        last-response="{{jsondata}}">
+    </iron-ajax>
+
+    <template is="dom-repeat" items="{{jsondata}}">
+      <div>
+        <a href="/en/objects/category/{{item.id}}/{{item.name}}">
+        <span>{{item.name}}</span>
+        </a>
+      </div>
+    </template>
+        
+    
+  </template>
+  <!-- Creates the element's prototype and registers it -->
+  
+  
+  <script>
+    Polymer({
+      is: 'my-new-view'
+    
+    });
+  </script>
+</dom-module>
