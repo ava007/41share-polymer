@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-view3">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <iron-ajax
+        auto
+        url="https://www.41share.com/api/categories/jsona/1"
+        handle-as="json"
+        last-error="{{lastError}}" on-error="_handleError"
+        last-response="{{jsondata}}">
+    </iron-ajax>    
+
+    <div class="card">
+      <div class="circle">3</div>
+      <h1>All Shared Items</h1>
+      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.
+      </p>
+      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
+           
+      <template is="dom-repeat" items="{{jsondata}}">
+        <div>
+          <a href="/en/objects/category/{{item.id}}/{{item.name}">
+            <span>{{item.obj_title}}</span>
+          </a>
+        </div>
+      </template>
+    </div>
+    
+    <div class="response" hidden$="[[!isError]]">
+        <h2>Error</h2>
+        <div>[[lastError.request.status]]</div>
+        <div>[[lastError.request.statusText]]</div>
+        <div>[[lastError.error]]</div>
+      </div>
+   
+  </template>
+  <script>
+    Polymer({
+      is: 'my-view3',
+      
+      
+        _handleError: function(e, detail) {
+          this.isError = true;
+          //this.isOk = false;
+          console.log(detail, detail.error, detail.request.status, detail.request.statusText);
+        }
+      
+    });
+  </script>
+</dom-module>
